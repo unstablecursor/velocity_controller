@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="velocity_controller" name="controller_node" type="controller_node.py" output="screen">
+        <param name="/max_velocity" value="1.0" />
+        <param name="/stop_distance" value="0.5" />
+        <param name="/slowdown_distance" value="2.5" />
+        <param name="/robot_namespace" value="rto-1" />
+  </node>
+</launch>
