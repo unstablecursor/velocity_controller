@@ -9,3 +9,8 @@ Specify parameters in `launch/controller.launch` file.
 
 ## Launching
 Simply type `roslaunch velocity_controller controller.launch`
+
+## Comments
+I've used simple linear deaccelaration model for robot. It did not work at first implementation, b/c there was a mistake about division. I've tried tanh, but decided linear is way to go. 
+Speed linearly decreases as it gets closer to any object in its laser scanner field. Minimum distance in the scan field in considered for deacceleration.
+Then it worked pretty well, both for p3dx and rto-1. 
