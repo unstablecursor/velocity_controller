@@ -44,17 +44,16 @@ class ControllerNode:
     
     def filter_twist(self):
         rospy.loginfo(f"Got twist: {self.robot_twist}")
-        if self.robot_twist.linear.x > self.max_velocity:
-            self.robot_twist.linear.x = self.max_velocity
         self.filtered_twist = self.robot_twist
+        if self.robot_twist.linear.x > self.max_velocity:
+            self.filtered_twist.linear.x = self.max_velocity
         if self.robot_twist.linear.x > 0.0 :
             min_dist_obs = min(self.scan.ranges)
             if min_dist_obs < self.slowdown_distance:
                 val = min_dist_obs - self.stop_distance
+                rospy.loginfo(f"Val : {val}, diif {self.slowdown_distance - self.stop_distance} ")
                 if val > 0.0:
-                    self.filtered_twist.linear.x = self.robot_twist.linear.x * math.tanh(
-                        math.pi * 2 / (val / (self.slowdown_distance - self.stop_distance)) 
-                        )
+                    self.filtered_twist.linear.x = self.filtered_twist.linear.x * (val / (self.slowdown_distance - self.stop_distance)) 
                 else: 
                     self.filtered_twist.linear.x = 0.0
         else: 
